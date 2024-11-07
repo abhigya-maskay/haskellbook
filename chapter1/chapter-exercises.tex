@@ -1,0 +1,120 @@
+% Created 2024-11-07 Thu 01:35
+% Intended LaTeX compiler: pdflatex
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\author{Abhigya Maskay}
+\date{\today}
+\title{}
+\hypersetup{
+ pdfauthor={Abhigya Maskay},
+ pdftitle={},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 29.4 (Org mode 9.7.11)}, 
+ pdflang={English}}
+\begin{document}
+
+\section{Chapter Exercises:}
+\label{sec:orgf34e3aa}
+\subsection{Combinators:}
+\label{sec:orgb794611}
+\begin{enumerate}
+\item \({\lambda}x.xxx\) -> Combinator
+\item \({\lambda}xy.zx\) -> Not Combinator
+\item \({\lambda}xyz.xy(zx)\) -> Combinator
+\item \({\lambda}xyz.xy(zxy)\) -> Combinator
+\item \({\lambda}xy.xy(zxy)\) -> Not Combinator
+\end{enumerate}
+\subsection{Normal form or diverge}
+\label{sec:orgcb1484c}
+\begin{enumerate}
+\item \({\lambda}x.xxx\) -> No further reductions possible so this is already in normal form
+\item \(({\lambda}z.zz) ({\lambda}y.yy)\)
+\([z := ({\lambda}y.yy)]\)
+\(({\lambda}y.yy)({\lambda}y.yy)\)
+\([ y := ({\lambda}y.yy)]\)
+\(({\lambda}y.yy)({\lambda}y.yy)\)
+This will no longer reduce and will continue infinitely. So the expression is divergent
+\item \(({\lambda}x.xxx)z\)
+\([x := z]\)
+\(zzz\)
+This has been reduced to normal form
+\end{enumerate}
+\subsection{Beta reduction}
+\label{sec:orge674a9d}
+\begin{enumerate}
+\item \(({\lambda}abc.cba) zz ({\lambda}wv.w)\)
+\(({\lambda}a.{\lambda}b.{\lambda}c.cba) zz ({\lambda}wv.w)\)
+\([a := z]\)
+\(({\lambda}b.{\lambda}c.cbz) z ({\lambda}wv.w)\)
+\([b := z]\)
+\(({\lambda}c.czz) ({\lambda}wv.w)\)
+\([c := ({\lambda}wv.w)]\)
+\(({\lambda}wv.w) z z\)
+\([ w := z]\)
+\(({\lambda}v.z)\)
+\([ v := z ]\)
+\(z\)
+\item \(({\lambda}x.{\lambda}y.xyy)({\lambda}a.a)b\)
+\([x := ({\lambda}a.a)]\)
+\(({\lambda}y({\lambda}a.a)yy)b\)
+\([ y := ({\lambda}b.b)]\)
+\(({\lambda}a.a)bb\)
+\([ a := b ]\)
+\(bb\)
+\item \(({\lambda}y.y)({\lambda}x.xx)({\lambda}z.zq)\)
+\([y := ({\lambda}x.xx)]\)
+\(({\lambda}x.xx)({\lambda}z.zq)\)
+\([x := ({\lambda}z.zq)]\)
+\(({\lambda}z.zq)({\lambda}z.zq)\)
+\([z := ({\lambda}z.zq)]\)
+\(({\lambda}z.zq)q\)
+\([ z := q ]\)
+\(qq\)
+\item \(({\lambda}z.z)({\lambda}z.zz)({\lambda}z.zy)\)
+\(({\lambda}z_1.z_1)({\lambda}z_2.z_2z_2)({\lambda}z_3.z_3y)\)
+\([z_1 := ({\lambda}z_2.z_2z_2)]\)
+\(({\lambda}z_2.z_2z_2)({\lambda}z_3.z_3y)\)
+\([z_2 := ({\lambda}z_3.z_3y)]\)
+\(({\lambda}z_3.z_3y)({\lambda}z_3.z_3y)\)
+\([z_3 := ({\lambda}z_3.z_3y)]\)
+\(({\lambda}z_3.z_3y)y\)
+\([ z_3 := y ]\)
+\(yy\)
+\item \(({\lambda}x.{\lambda}y.xyy)({\lambda}y.y)y\)
+\(({\lambda}x.{\lambda}y_1.xy_1y_1)({\lambda}y_2.y_2)y_3\)
+\([x := ({\lambda}y_2.y_2)]\)
+\(({\lambda}y_1.({\lambda}y_2.y_2)y_1y_1)y_3\)
+\([ y_1 := y_3 ]\)
+\(({\lambda}y_2y_2)y_3y_3\)
+\([y_2 := y_3]\)
+\(y_3y_3\)
+\item \(({\lambda}a.aa)({\lambda}b.ba)c\)
+\([a := ({\lambda}b.ba)]\)
+\(({\lambda}b.ba)({\lambda}b.ba)c\)
+\([b := ({\lambda}b.ba)]\)
+\(({\lambda}b.ba)ac\)
+\([b := a]\)
+\(aac\)
+\item \(({\lambda}xyz.xz(yz))({\lambda}x.z)({\lambda}x.a)\)
+\(({\lambda}x_1y_1z_1.x_1z_1(y_1z_1)) ({\lambda}x_2.z_2) ({\lambda}x_3.a)\)
+\([x_1 := ({\lambda}x_2.z_2)]\)
+\(({\lambda}y_1z_1.({\lambda}x_2z_2)z_1(y_1z_1)) ({\lambda}x_3.a)\)
+\([y_1 := ({\lambda}x_3.a)]\)
+\(({\lambda}z_1.({\lambda}x_2.z_2)) z_1 (({\lambda}x_3.a)z_1)\)
+\([x_2 := z_1]\)
+\({\lambda}z_1.z_2(({\lambda}x_3.a)z_1)\)
+\([x_3 := z_1]\)
+\({\lambda}z_1.z_2a\)
+\end{enumerate}
+\end{document}

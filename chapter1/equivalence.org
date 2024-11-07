@@ -1,0 +1,8 @@
+#+startup: latexpreview
+#+OPTIONS: toc:nil
+
+* Equivalence exercises:
+
+1. \( {\lambda}xz.xz = {\lambda}mn.mz \)
+2. \( {\lambda}xy.xxy = {\lambda}a.({\lambda}b.aab)\)
+3. \( {\lambda}xyz.zx = {\lambda}tos.st \)

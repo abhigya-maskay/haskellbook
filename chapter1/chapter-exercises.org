@@ -1,0 +1,69 @@
+#+OPTIONS: toc:nil
+* Chapter Exercises:
+** Combinators:
+1. \( {\lambda}x.xxx \) -> Combinator
+2. \( {\lambda}xy.zx\) -> Not Combinator
+3. \( {\lambda}xyz.xy(zx) \) -> Combinator
+4. \({\lambda}xyz.xy(zxy) \) -> Combinator
+5. \( {\lambda}xy.xy(zxy)\) -> Not Combinator
+
+** Normal form or diverge
+1. \( {\lambda}x.xxx \) -> No further reductions possible so this is already in normal form
+2. \( ({\lambda}z.zz) ({\lambda}y.yy)\)
+   \([z := ({\lambda}y.yy)] \)
+   \( ({\lambda}y.yy)({\lambda}y.yy)\)
+   \([ y := ({\lambda}y.yy)] \)
+   \(({\lambda}y.yy)({\lambda}y.yy)\)
+   This will no longer reduce and will continue infinitely. So the expression is divergent
+3. \(({\lambda}x.xxx)z\)
+   \([x := z]\)
+   \(zzz\)
+   This has been reduced to normal form
+
+** Beta reduction
+1. \( ({\lambda}abc.cba) zz ({\lambda}wv.w) \)
+   \( ({\lambda}a.{\lambda}b.{\lambda}c.cba) zz ({\lambda}wv.w) \)
+   \( [a := z] \)
+   \( ({\lambda}b.{\lambda}c.cbz) z ({\lambda}wv.w)\)
+   \( [b := z] \)
+   \( ({\lambda}c.czz) ({\lambda}wv.w) \)
+   \( [c := ({\lambda}wv.w)] \)
+   \( ({\lambda}wv.w) z z \)
+   \( [ w := z] \)
+   \( ({\lambda}v.z) \)
+   \( [ v := z ] \)
+   \( z \)
+2. \( ({\lambda}x.{\lambda}y.xyy)({\lambda}a.a)b \)
+   \( [x := ({\lambda}a.a)] \)
+   \( ({\lambda}y({\lambda}a.a)yy)b \)
+   \( [ y := ({\lambda}b.b)] \)
+   \( ({\lambda}a.a)bb \)
+   \( [ a := b ] \)
+   \( bb \)
+3. \( ({\lambda}y.y)({\lambda}x.xx)({\lambda}z.zq) \)
+   \( [y := ({\lambda}x.xx)] \)
+   \( ({\lambda}x.xx)({\lambda}z.zq) \)
+   \( [x := ({\lambda}z.zq)] \)
+   \( ({\lambda}z.zq)({\lambda}z.zq) \)
+   \( [z := ({\lambda}z.zq)] \)
+   \( ({\lambda}z.zq)q \)
+   \([ z := q ]\)
+   \( qq \)
+4. \( ({\lambda}z.z)({\lambda}z.zz)({\lambda}z.zy) \)
+   \( ({\lambda}z_1.z_1)({\lambda}z_2.z_2z_2)({\lambda}z_3.z_3y) \)
+   \( [z_1 := ({\lambda}z_2.z_2z_2)] \)
+   \(({\lambda}z_2.z_2z_2)({\lambda}z_3.z_3y)\)
+   \( [z_2 := ({\lambda}z_3.z_3y)] \)
+   \( ({\lambda}z_3.z_3y)({\lambda}z_3.z_3y) \)
+   \( [z_3 := ({\lambda}z_3.z_3y)] \)
+   \( ({\lambda}z_3.z_3y)y \)
+   \( [ z_3 := y ] \)
+   \( yy \)
+5. \( ({\lambda}x.{\lambda}y.xyy)({\lambda}y.y)y \)
+   \( ({\lambda}x.{\lambda}y_1.xy_1y_1)({\lambda}y_2.y_2)y_3 \)
+   \([x := ({\lambda}y_2.y_2)] \)
+   \( ({\lambda}y_1.({\lambda}y_2.y_2)y_1y_1)y_3 \)
+   \( [ y_1 := y_3 ] \)
+   \( ({\lambda}y_2y_2)y_3y_3 \)
+   \( [y_2 := y_3] \)
+   \(y_3y_3\)
