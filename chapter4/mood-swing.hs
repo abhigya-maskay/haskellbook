@@ -1,4 +1,4 @@
-data Mood = Blah | Woot deriving Show
+data Mood = Blah | Woot deriving (Show)
 
 -- 1.The type constructor here is Mood
 -- 2.The Mood values that you could possibly use are Blah and Woot
