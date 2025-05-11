@@ -1,0 +1,40 @@
+* Guard Duty
+
+*** 1
+An otherwise branch as your first branch causes the overall function to always return the first branch regardless of what argument is passed in
+*** 2
+Reordering the guards can have a similar effect since the function always returns the FIRST branch that matches
+#+BEGIN_SRC haskell :session pal :tangle yes :comments link
+pal xs
+  | xs == reverse xs = True
+  | otherwise = False
+#+END_SRC
+
+*** 3
+b)
+
+*** 4
+pal can take any argument of type String
+
+*** 5
+The type of the function pal is
+#+BEGIN_SRC haskell
+pal :: Eq a => [a] -> Bool
+#+END_SRC
+
+*** 6
+#+BEGIN_SRC haskell :tangle yes :comments link
+numbers x
+  | x < 0 = -1
+  | x == 0 = 0
+  | x > 0 = 1
+#+END_SRC
+
+c)
+*** 7
+Numbers can take any numeric value as an argument
+*** 8
+numbers is of the type
+#+BEGIN_SRC haskell
+numbers :: (Num a) => a -> a
+#+END_SRC
