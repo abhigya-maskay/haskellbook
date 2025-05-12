@@ -1,6 +1,6 @@
 import Data.List (sort)
 
-i :: Num a => a
+i :: (Num a) => a
 -- 1)
 -- i :: a
 -- This would not typecheck because we need an instance of Num for numeric literals
@@ -28,6 +28,7 @@ freud :: a -> a
 freud x = x
 
 myX = 1 :: Int
+
 sigmund :: Int -> Int
 -- 7)
 -- sigmund :: a -> a
