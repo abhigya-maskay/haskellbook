@@ -1,0 +1,73 @@
+* Chapter Exercises
+** Multiple Choice
+1) d)
+2) b)
+3) d)
+4) b)
+5) a)
+
+** Let's write code
+*** 1) a)
+#+BEGIN_SRC haskell :tangle chapter-exercises-lets-write-code.hs :comments link
+tensDigit :: (Integral a) => a -> a
+tensDigit x = d
+  where
+    x' = fst . divMod x $ 10
+    d = snd . divMod x' $ 10
+#+END_SRC
+c)
+#+BEGIN_SRC haskell :tangle chapter-exercises-lets-write-code.hs :comments link
+hunsD :: (Integral a) => a -> a
+hunsD x = d
+  where
+    x' = fst . divMod x $ 100
+    d = snd . divMod x' $ 10
+#+END_SRC
+*** 2)
+#+BEGIN_SRC haskell :tangle chapter-exercises-lets-write-code.hs :comments link
+foldBool :: a -> a -> Bool -> a
+foldBool x y bool = case bool of
+  True -> x
+  False -> y
+
+foldBool' :: a -> a -> Bool -> a
+foldBool' x y bool
+  | bool = x
+  | otherwise = y
+#+END_SRC
+*** 3)
+#+BEGIN_SRC haskell :tangle chapter-exercises-lets-write-code.hs :comments link
+g :: (a -> b) -> (a, c) -> (b, c)
+g aToB (a, c) = (aToB a, c)
+#+END_SRC
+
+*** 4)
+#+BEGIN_SRC haskell :tangle chapter-exercises-lets-write-code.hs :comments link
+roundTrip :: (Show a, Read a) => a -> a
+roundTrip a = read (show a)
+
+main = do
+  print (roundTrip 4)
+  print (id 4)
+#+END_SRC
+
+*** 5)
+#+BEGIN_SRC haskell :tangle chapter-exercises-lets-write-code.hs :comments link
+roundTrip' :: (Show a, Read a) => a -> a
+roundTrip' = read . show
+
+main' = do
+  print (roundTrip' 4)
+  print (id 4)
+#+END_SRC
+
+*** 6)
+
+#+BEGIN_SRC haskell :tangle chapter-exercises-lets-write-code.hs :comments link
+roundTrip'' :: (Show a, Read b) => a -> b
+roundTrip'' = read . show
+
+main'' = do
+  print ((roundTrip'' :: Int -> Int) 4)
+  print (id 4)
+#+END_SRC
