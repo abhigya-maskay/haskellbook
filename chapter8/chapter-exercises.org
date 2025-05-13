@@ -1,0 +1,167 @@
+* Chapter Exercises
+** Review of types
+*** 1)
+d)
+*** 2)
+b)
+*** 3)
+d)
+*** 4)
+b)
+** Reviewing currying
+#+NAME: Source
+#+BEGIN_SRC haskell :comments yes :tangle chapter-exercises-currying.hs
+cattyConny :: String -> String -> String
+cattyConny x y = x ++ " mrow " ++ y
+
+flippy :: String -> String -> String
+flippy = flip cattyConny
+
+appedCatty :: String -> String
+appedCatty = cattyConny "woops"
+
+frappe :: String -> String
+frappe = flippy "haha"
+#+END_SRC
+
+*** 1)
+"woops mrow woohoo!"
+#+NAME: One
+#+BEGIN_SRC haskell :comments yes :tangle chapter-exercises-currying.hs
+ans1 = appedCatty "woohoo!"
+#+END_SRC
+*** 2)
+"1 mrow haha"
+#+NAME: Two
+#+BEGIN_SRC haskell :comments yes :tangle chapter-exercises-currying.hs
+ans2 = frappe "1"
+#+END_SRC
+*** 3)
+"woops mrow 2 mrow haha"
+#+NAME: Three
+#+BEGIN_SRC haskell :comments yes :tangle chapter-exercises-currying.hs
+ans3 = frappe (appedCatty "2")
+#+END_SRC
+*** 4)
+"woops mrow blue mrow haha"
+#+NAME: Four
+#+BEGIN_SRC haskell :comments yes :tangle chapter-exercises-currying.hs
+ans4 = appedCatty (frappe "blue")
+#+END_SRC
+*** 5)
+"pink mrow haha mrow green mrow woops mrow blue"
+#+NAME: Five
+#+BEGIN_SRC haskell :comments yes :tangle chapter-exercises-currying.hs
+ans5 =
+  cattyConny
+    (frappe "pink")
+    ( cattyConny
+        "green"
+        (appedCatty "blue")
+    )
+#+END_SRC
+*** 6)
+"are mrow Pugs mrow awesome"
+#+NAME: Six
+#+BEGIN_SRC haskell :comments yes :tangle chapter-exercises-currying.hs
+ans6 = cattyConny (flippy "Pugs" "are") "awesome"
+#+END_SRC
+** Recursion
+*** 1)
+#+BEGIN_SRC haskell
+dividedBy :: Integral a => a -> a -> (a,a)
+dividedBy num denom = go num denom 0
+  where go n d count
+          | n < d = (count, n)
+          | otherwise = go (n - d) d (count + 1)
+#+END_SRC
+#+BEGIN_SRC haskell
+dividedBy 15 2
+go 15 2 0
+go 13 2 1
+go 11 2 2
+go 9 2 3
+go 7 2 4
+go 5 2 5
+go 3 2 6
+go 1 2 7
+(7, 1)
+#+END_SRC
+*** 2)
+#+NAME: RTwo
+#+BEGIN_SRC haskell :comments yes :tangle chapter-exercises-recursion.hs
+recursiveSum :: (Eq a, Num a) => a -> a
+recursiveSum 1 = 1
+recursiveSum n = n + (recursiveSum (n - 1))
+#+END_SRC
+
+*** 3)
+#+NAME: RThree
+#+BEGIN_SRC haskell :comments yes :tangle chapter-exercises-recursion.hs
+recursiveMult :: (Eq a, Num a) => a -> a -> a
+recursiveMult x 0 = 0
+recursiveMult x y = x + (recursiveMult x (y - 1))
+#+END_SRC
+** Fixing DividedBy
+#+NAME: FDOne
+#+BEGIN_SRC haskell :comments yes :tangle chapter-exercises-fixing-dividedBy.hs
+data DividedResult a where
+  Result :: a -> a -> DividedResult a
+  DividedByZero :: DividedResult a
+  deriving (Show)
+
+dividedBy :: (Integral a) => a -> a -> DividedResult a
+dividedBy _ 0 = DividedByZero
+dividedBy num denom = res
+  where
+    res = Result quot rem
+    (quot, rem) = go num denom 0
+    negateQuot (x, y) = (-x, y)
+    go n d count
+      | n < 0 && d < 0 = negateQuot $ go (-n) (-d) count
+      | n < 0 = negateQuot $ go (-n) d count
+      | d < 0 = negateQuot $ go n (-d) count
+      | n < d = (count, n)
+      | otherwise = go (n - d) d (count + 1)
+#+END_SRC
+** McCarthy 91 function
+#+NAME: McOne
+#+BEGIN_SRC haskell :comments yes :tangle chapter-exercises-mcCarthy-91.hs
+mc91 :: (Integral a) => a -> a
+mc91 n
+  | n > 100 = n - 10
+  | n <= 100 = mc91 (mc91 (n + 11))
+#+END_SRC
+
+** Numbers to Word
+#+NAME: N2W
+#+BEGIN_SRC haskell :comments yes :tangle chapter-exercises-number-to-word.hs
+module WordNumber where
+
+import Data.List (intersperse)
+
+digitToWord :: Int -> String
+digitToWord n = case n of
+  1 -> "one"
+  2 -> "two"
+  3 -> "three"
+  4 -> "four"
+  5 -> "five"
+  6 -> "six"
+  7 -> "seven"
+  8 -> "eight"
+  9 -> "nine"
+  0 -> "zero"
+
+digits :: Int -> [Int]
+digits n = go n []
+  where
+    go 0 acc = acc
+    go n' acc = go initDigits (lastDigit:acc)
+      where
+        initDigits = div n' 10
+        lastDigit = mod n' 10
+
+wordNumber :: Int -> String
+wordNumber n = concat . intersperse "-" . map digitToWord . digits $ n
+#+END_SRC
