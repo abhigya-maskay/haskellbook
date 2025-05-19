@@ -1,0 +1,149 @@
+* Chapter Exercises
+** Data.Char
+#+NAME: Imports
+#+BEGIN_SRC haskell :tangle chapter-exercises-data-char.hs :comments link
+import Data.Char
+#+END_SRC
+*** 2)
+#+NAME: Two
+#+BEGIN_SRC haskell :tangle chapter-exercises-data-char.hs :comments link
+filterUpper :: String -> String
+filterUpper = filter isUpper
+#+END_SRC
+*** 3)
+#+NAME: Three
+#+BEGIN_SRC haskell :tangle chapter-exercises-data-char.hs :comments link
+titlize :: String -> String
+titlize "" = ""
+titlize (x:xs) = (toUpper x):xs
+#+END_SRC
+*** 4)
+#+NAME: Four
+#+BEGIN_SRC haskell :tangle chapter-exercises-data-char.hs :comments link
+capitalize :: String -> String
+capitalize "" = ""
+capitalize (x:xs) = (toUpper x):(capitalize xs)
+#+END_SRC
+*** 5)
+#+NAME: Five
+#+BEGIN_SRC haskell :tangle chapter-exercises-data-char.hs :comments link
+firstUpper :: String -> Char
+firstUpper = toUpper . head
+#+END_SRC
+
+** Cipher
+#+NAME: Cipher
+#+BEGIN_SRC haskell :tangle chapter-exercises-cipher.hs :comments link
+module Cipher where
+
+import Data.Char
+
+charWidth :: Int
+charWidth = 26
+
+getLeftAnchor :: Int -> Int
+getLeftAnchor x = if isUpper (chr x) then ord 'A' else ord 'a'
+
+shiftRightInt :: Int -> Int -> Int
+shiftRightInt shifter charInt = (charInt + shifter - leftAnchor) `mod` charWidth + leftAnchor
+  where
+    leftAnchor = getLeftAnchor charInt
+
+shiftRight :: Int -> Char -> Char
+shiftRight shifter x =
+  if isAlpha x
+    then chr . shiftRightInt shifter . ord $ x
+    else x
+
+caesar :: Int -> String -> String
+caesar shifter = map (shiftRight shifter)
+
+uncaesar :: Int -> String -> String
+uncaesar shifter = map reverseShift
+  where
+    reverseShift = shiftRight (-shifter)
+#+END_SRC
+
+** Standard Functions
+*** 1)
+#+NAME: or
+#+BEGIN_SRC haskell :tangle chapter-exercises-standard-functions.hs :comments link
+myOr :: [Bool] -> Bool
+myOr [] = False
+myOr (x:xs) = x || (myOr xs)
+#+END_SRC
+*** 2)
+#+NAME: any
+#+BEGIN_SRC haskell :tangle chapter-exercises-standard-functions.hs :comments link
+myAny :: (a -> Bool) -> [a] -> Bool
+myAny _ [] = False
+myAny f (x:xs) = (f x) || (myAny f xs)
+#+END_SRC
+*** 3)
+#+NAME: myElem
+#+BEGIN_SRC haskell :tangle chapter-exercises-standard-functions.hs :comments link
+myElem :: Eq a => a -> [a] -> Bool
+myElem e [] = False
+myElem e (x:xs) = if e == x then True else myElem e xs
+
+myElemAny :: Eq a => a -> [a] -> Bool
+myElemAny e xs = myAny (== e) xs
+#+END_SRC
+*** 4)
+#+NAME: reverse
+#+BEGIN_SRC haskell :tangle chapter-exercises-standard-functions.hs :comments link
+myReverse :: [a] -> [a]
+myReverse [] = []
+myReverse (x:xs) = (myReverse xs) ++ [x]
+#+END_SRC
+*** 5)
+#+NAME: squish
+#+BEGIN_SRC haskell :tangle chapter-exercises-standard-functions.hs :comments link
+squish :: [[a]] -> [a]
+squish [] = []
+squish (x:xs) = x ++ (squish xs)
+#+END_SRC
+*** 6)
+#+NAME: squishMap
+#+BEGIN_SRC haskell :tangle chapter-exercises-standard-functions.hs :comments link
+squishMap :: (a -> [b]) -> [a] -> [b]
+squishMap f [] = []
+squishMap f (x:xs) = (f x) ++ (squishMap f xs)
+#+END_SRC
+*** 6)
+#+NAME: squishAgain
+#+BEGIN_SRC haskell :tangle chapter-exercises-standard-functions.hs :comments link
+squishAgain :: [[a]] -> [a]
+squishAgain = squishMap id
+#+END_SRC
+*** 7)
+#+NAME: max
+#+BEGIN_SRC haskell :tangle chapter-exercises-standard-functions.hs :comments link
+myMaximumBy :: (a -> a -> Ordering) -> [a] -> a
+myMaximumBy comparator (x:xs) = go comparator xs x
+  where
+    go _ [] acc = acc
+    go comparator (x:xs) acc = if comparator x acc == GT
+      then go comparator xs x
+      else go comparator xs acc
+#+END_SRC
+*** 8)
+#+NAME: min
+#+BEGIN_SRC haskell :tangle chapter-exercises-standard-functions.hs :comments link
+myMinimumBy :: (a -> a -> Ordering) -> [a] -> a
+myMinimumBy comparator (x:xs) = go comparator xs x
+  where
+    go _ [] acc = acc
+    go comparator (x:xs) acc = if comparator x acc == LT
+      then go comparator xs x
+      else go comparator xs acc
+#+END_SRC
+*** 8)
+#+NAME: max and min
+#+BEGIN_SRC haskell :tangle chapter-exercises-standard-functions.hs :comments link
+myMaximum :: (Ord a) => [a] -> a
+myMaximum = myMaximumBy compare
+
+myMinimum :: (Ord a) => [a] -> a
+myMinimum = myMinimumBy compare
+#+END_SRC

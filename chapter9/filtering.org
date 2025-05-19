@@ -1,0 +1,24 @@
+* Filtering
+** 1)
+#+NAME: One
+#+BEGIN_SRC haskell :tangle yes :comments link
+mult3 :: Integral a => [a] -> [a]
+mult3 = filter (\x -> x `mod` 3 == 0)
+one = mult3 [1..30]
+#+END_SRC
+** 2)
+#+NAME: Two
+#+BEGIN_SRC haskell :tangle yes :comments link
+mult3Length :: Integral a => [a] -> Int
+mult3Length = length . mult3
+two = mult3Length [1..30]
+#+END_SRC
+** 3)
+#+NAME: Three
+#+BEGIN_SRC haskell :tangle yes :comments link
+filterArticlesList :: [String] -> [String]
+filterArticlesList = filter (\x -> not . elem x $ ["a", "an", "the"])
+
+filterArticles :: String -> [String]
+filterArticles = filterArticlesList . words
+#+END_SRC

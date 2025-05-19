@@ -1,0 +1,61 @@
+* Bottom Madness
+** 1)
+#+NAME: One
+#+BEGIN_SRC haskell :tangle yes :comments link
+one = [x ^ y | x <- [1 .. 5], y <- [2, undefined]]
+#+END_SRC
+Bottom
+** Two
+#+NAME: Two
+#+BEGIN_SRC haskell :tangle yes :comments link
+two = take 1 $ [x ^ y | x <- [1 .. 5], y <- [2, undefined]]
+#+END_SRC
+Value
+** Three
+#+NAME: Three
+#+BEGIN_SRC haskell :tangle yes :comments link
+three = sum [1, undefined, 3]
+#+END_SRC
+Bottom
+** Four
+#+NAME: Four
+#+BEGIN_SRC haskell :tangle yes :comments link
+four = length [1, 2, undefined]
+#+END_SRC
+Value
+** Five
+#+NAME: Five
+#+BEGIN_SRC haskell :tangle yes :comments link
+five = length $ [1, 2, 3] ++ undefined
+#+END_SRC
+Bottom
+** Six
+#+NAME: Six
+#+BEGIN_SRC haskell :tangle yes :comments link
+six = take 1 $ filter even [1, 2, 3, undefined]
+#+END_SRC
+Value
+** Seven
+#+NAME: Seven
+#+BEGIN_SRC haskell :tangle yes :comments link
+seven = take 1 $ filter even [1, 3, undefined]
+#+END_SRC
+Bottom
+** Eight
+#+NAME: Eight
+#+BEGIN_SRC haskell :tangle yes :comments link
+eight = take 1 $ filter odd [1, 3, undefined]
+#+END_SRC
+Value
+** Nine
+#+NAME: Nine
+#+BEGIN_SRC haskell :tangle yes :comments link
+nine = take 2 $ filter odd [1, 3, undefined]
+#+END_SRC
+Value
+** Ten
+#+NAME: Ten
+#+BEGIN_SRC haskell :tangle yes :comments link
+ten = take 3 $ filter odd [1, 3, undefined]
+#+END_SRC
+Bottom
