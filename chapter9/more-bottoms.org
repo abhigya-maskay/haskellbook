@@ -1,0 +1,62 @@
+* More Bottoms
+Import for 6)
+#+NAME: Import
+#+BEGIN_SRC haskell :tangle more-bottoms.hs :comments link
+import Data.Bool (bool)
+#+END_SRC
+
+** 1)
+#+NAME: One
+#+BEGIN_SRC haskell :tangle more-bottoms.hs :comments link
+one = take 1 $ map (+1) [undefined, 2, 3]
+#+END_SRC
+Bottom
+
+** 2)
+#+NAME: Two
+#+BEGIN_SRC haskell :tangle more-bottoms.hs :comments link
+two = take 1 $ map (+1) [1, undefined, 3]
+#+END_SRC
+Not Bottom
+
+** 3)
+#+NAME: Three
+#+BEGIN_SRC haskell :tangle more-bottoms.hs :comments link
+three = take 2 $ map (+1) [1, undefined, 3]
+#+END_SRC
+Bottom
+
+** 4)
+#+NAME: Four
+#+BEGIN_SRC haskell :tangle more-bottoms.hs :comments link
+itIsMystery :: String -> [Bool]
+itIsMystery xs = map (\x -> elem x "aeiou") xs
+#+END_SRC
+The function takes a string and return an array of Bools that represent whether or not each corresponding character in the string is a vowel
+
+** 5)
+#+NAME: Five
+#+BEGIN_SRC haskell :tangle more-bottoms.hs :comments link
+fiveA = map (^2) [1..10]
+fiveB = map minimum [[1..10], [10..20], [20..30]]
+fiveC = map sum [[1..5], [1..5], [1..5]]
+#+END_SRC
+
+*** a)
+#+BEGIN_SRC haskell
+[1,4,9,16,25,36,49,64,81,100]
+#+END_SRC
+*** b)
+#+BEGIN_SRC haskell
+[1,10,20]
+#+END_SRC
+*** c)
+#+BEGIN_SRC haskell
+[15,15,15]
+#+END_SRC
+
+** 6)
+#+NAME: Six
+#+BEGIN_SRC haskell :tangle more-bottoms.hs :comments link
+six = map (\x -> bool x (-x) (x == 3)) [1..10]
+#+END_SRC

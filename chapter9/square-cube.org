@@ -1,0 +1,20 @@
+* Square Cube
+*** 1)
+#+NAME: One
+#+BEGIN_SRC haskell :tangle yes :comments link
+mySqr = [x ^ 2 | x <- [1 .. 5]]
+
+myCube = [y ^ 3 | y <- [1 .. 5]]
+
+tuples = [(s, c) | s <- mySqr, c <- myCube]
+#+END_SRC
+*** 2)
+#+NAME: Two
+#+BEGIN_SRC haskell :tangle yes :comments link
+tuples' = [(s, c) | s <- mySqr, c <- myCube, s < 50, c < 50]
+#+END_SRC
+*** 3)
+#+NAME: Three
+#+BEGIN_SRC haskell :tangle yes :comments link
+tupleLength = length [(s, c) | s <- mySqr, c <- myCube, s < 50, c < 50]
+#+END_SRC

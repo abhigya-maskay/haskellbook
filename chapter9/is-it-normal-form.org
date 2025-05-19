@@ -1,0 +1,36 @@
+* Is it Normal Form?
+** 1)
+#+BEGIN_SRC haskell
+[1,2,3,4,5]
+#+END_SRC
+Normal Form
+** 2)
+#+BEGIN_SRC haskell
+1 : 2 : 3 : 4 : _
+#+END_SRC
+Weak Head Normal Form
+** 3)
+#+BEGIN_SRC haskell
+enumFromTo 1 10
+#+END_SRC
+Neither
+** 4)
+#+BEGIN_SRC haskell
+length [1, 2, 3, 4, 5]
+#+END_SRC
+Neither
+** 5)
+#+BEGIN_SRC haskell
+sum (enumFromTo 1 10)
+#+END_SRC
+Neither
+** 6)
+#+BEGIN_SRC haskell
+['a'..'m'] ++ ['n'..'z']
+#+END_SRC
+Neither
+** 7)
+#+BEGIN_SRC haskell
+(_, 'b')
+#+END_SRC
+Weak Head Normal Form
