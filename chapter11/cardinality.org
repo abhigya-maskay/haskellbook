@@ -1,0 +1,6 @@
+* Cardinality
+** 1)
+#+BEGIN_SRC haskell
+data PugType = PugData
+#+END_SRC
+This has a cardinality of 1 because it has only one constant value represented by the data constructor (~PugData~)
