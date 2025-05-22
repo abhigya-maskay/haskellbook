@@ -1,0 +1,100 @@
+* Chapter Exercises
+** Warm up and review
+*** 1)
+#+BEGIN_SRC haskell :tangle chapter-exercise-warm-up.hs :comments link
+stops = "pbtdkg"
+vowels = "aeiou"
+#+END_SRC
+**** a)
+#+BEGIN_SRC haskell :tangle chapter-exercise-warm-up.hs :comments link
+letterCombinations :: String -> String -> [String]
+letterCombinations stops vowels = [ x:y:[z] | x <- stops, y <- vowels, z <- stops]
+#+END_SRC
+**** b)
+#+BEGIN_SRC haskell :tangle chapter-exercise-warm-up.hs :comments link
+pLetterCombinations :: String -> String -> [String]
+pLetterCombinations stops vowels = [ x:y:[z] | x <- stops, y <- vowels, z <- stops, x == 'p']
+#+END_SRC
+**** c)
+#+BEGIN_SRC haskell :tangle chapter-exercise-warm-up.hs :comments link
+nouns = ["Ocean", "Forest", "Key", "Table", "Phone", "Dream", "Whisper", "Adventure", "Door", "Song"]
+verbs = ["Jump", "Consider", "Design", "Hear", "Watch", "Read", "Talk", "Construct", "Discover", "Visualize"]
+
+wordCombinations :: [String] -> [String] -> [(String, String, String)]
+wordCombinations nouns verbs = [ (x,y,z) | x <- nouns, y <- verbs, z <- nouns]
+#+END_SRC
+
+*** 2)
+#+BEGIN_SRC haskell :tangle chapter-exercise-warm-up.hs :comments link
+seekritFunc x =
+  div (sum (map length (words x)))
+      (length (words x))
+#+END_SRC
+This gives the average length of a word in a group of words (or a sentence)
+
+*** 3)
+#+BEGIN_SRC haskell :tangle chapter-exercise-warm-up.hs :comments link
+seekritFunc' x = totalChars / numWords
+  where
+    totalChars = fromIntegral . sum . map length . words $ x
+    numWords = fromIntegral . length . words $ x
+#+END_SRC
+
+** Rewriting functions using folds
+*** 1)
+#+BEGIN_SRC haskell :tangle chapter-exercise-rewrite-using-folds.hs :comments link
+myOr :: [Bool] -> Bool
+myOr = foldr (||) False
+#+END_SRC
+*** 2)
+#+BEGIN_SRC haskell :tangle chapter-exercise-rewrite-using-folds.hs :comments link
+myAny :: (a -> Bool) -> [a] -> Bool
+myAny f = foldr (||) False . map f
+#+END_SRC
+*** 3)
+#+BEGIN_SRC haskell :tangle chapter-exercise-rewrite-using-folds.hs :comments link
+myElem :: Eq a => a -> [a] -> Bool
+myElem elem = foldr (\x y -> (x == elem) || y) False
+
+myElem' elem = any (== elem)
+#+END_SRC
+*** 4)
+#+BEGIN_SRC haskell :tangle chapter-exercise-rewrite-using-folds.hs :comments link
+myReverse :: [a] -> [a]
+myReverse = foldl (flip (:)) []
+#+END_SRC
+*** 5)
+#+BEGIN_SRC haskell :tangle chapter-exercise-rewrite-using-folds.hs :comments link
+myMap :: (a -> b) -> [a] -> [b]
+myMap f = foldr (\x y -> (f x):y) []
+#+END_SRC
+*** 6)
+#+BEGIN_SRC haskell :tangle chapter-exercise-rewrite-using-folds.hs :comments link
+myFilter :: (a -> Bool) -> [a] -> [a]
+myFilter f = foldr (\x y -> if f x then x:y else y) []
+#+END_SRC
+*** 7)
+#+BEGIN_SRC haskell :tangle chapter-exercise-rewrite-using-folds.hs :comments link
+squish :: [[a]] -> [a]
+squish = foldr (++) []
+#+END_SRC
+*** 8)
+#+BEGIN_SRC haskell :tangle chapter-exercise-rewrite-using-folds.hs :comments link
+squishMap :: (a -> [b]) -> [a] -> [b]
+squishMap f = foldr (\x y -> (f x) ++ y) []
+#+END_SRC
+*** 9)
+#+BEGIN_SRC haskell :tangle chapter-exercise-rewrite-using-folds.hs :comments link
+squishAgain :: [[a]] -> [a]
+squishAgain = squishMap id
+#+END_SRC
+*** 10)
+#+BEGIN_SRC haskell :tangle chapter-exercise-rewrite-using-folds.hs :comments link
+myMaximumBy :: (a -> a -> Ordering) -> [a] -> a
+myMaximumBy f (x:xs) = foldr (\x y -> if f x y == GT then x else y) x xs
+#+END_SRC
+*** 11)
+#+BEGIN_SRC haskell :tangle chapter-exercise-rewrite-using-folds.hs :comments link
+myMinimumBy :: (a -> a -> Ordering) -> [a] -> a
+myMinimumBy f (x:xs) = foldr (\x y -> if f x y == LT then x else y) x xs
+#+END_SRC
