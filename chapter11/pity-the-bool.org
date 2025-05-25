@@ -1,0 +1,11 @@
+* Pity the Bool
+** 1)
+Given the above datatype, the cardinality is:
+\begin{equation}
+2 + 2 = 4
+\end{equation}
+** 2)
+The cardinality is:
+\begin{equation}
+256 + 2 = 258
+\end{equation}

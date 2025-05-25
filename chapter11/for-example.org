@@ -1,0 +1,13 @@
+* For example
+#+BEGIN_SRC haskell :tangle for-example.hs :comments link
+data Example = MakeExample deriving Show
+#+END_SRC
+** 1)
+The type of ~MakeExample~ is ~Example~. Requesting the type of ~Example~ gives us an error because ~Example~ is not a data constructor, it is a type constructor. So ~Example~ does not have a type (as is not a value or a term level/runtime construct)
+** 2)
+~:info~ does show information for ~Example~ and the way that it is defined. It also shows that ~Show~ is the only typeclass instance currently defined for our Example type.
+** 3)
+#+BEGIN_SRC haskell :tangle for-example.hs :comments link
+data Example2 = MakeExample2 Int deriving Show
+#+END_SRC
+Querying for ~MakeExample2~ in GHCi now shows that it has a type of ~Int -> Example2~ and so it does not have a concrete type. It needs to be applied to an argument of type ~Int~ to give us something of type ~Example2~

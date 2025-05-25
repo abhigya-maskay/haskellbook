@@ -1,0 +1,30 @@
+* How does your garden grow
+#+BEGIN_SRC haskell
+data FlowerType = Gardenia
+  | Daisy
+  | Rose
+  | Lilac
+  deriving Show
+
+type Gardener = String
+
+data Garden = Garden Gardener FlowerType
+#+END_SRC
+
+For the sum of products we can think of it this way:
+The sum type is FlowerType
+~Gardenia~ + ~Daisy~ + ~Rose~ + ~Lilac~
+The product type is
+~Gardener~ * ~FlowerType~
+The Reduced type would be:
+~Gardener~ * (~Gardenia~ + ~Daisy~ + ~Rose~ + ~Lilac~)
+Which would be equivalent to:
+(~Gardener~ * ~Gardenia~) + (~Gardener~ * ~Daisy~) + (~Gardener~ * ~Rose~) + (~Gardener~ * ~Lilac~)
+
+Writing this back in Haskell Notation, this would result in:
+#+BEGIN_SRC haskell
+data Garden = Gardener Gardenia
+  | Gardener Daisy
+  | Gardener Rose
+  | Gardener Lilac
+#+END_SRC

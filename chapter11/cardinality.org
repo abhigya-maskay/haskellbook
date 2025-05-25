@@ -4,3 +4,11 @@
 data PugType = PugData
 #+END_SRC
 This has a cardinality of 1 because it has only one constant value represented by the data constructor (~PugData~)
+** 2)
+This has a cardinality of 3 because there are three data constructors each of which is a constant value
+** 3)
+The cardinality of Int16 is 65536 (32768 + 1 + 32767)
+** 4)
+The cardinality of Integer is not bounded so it is infinite. The cardinality of Int is (9223372036854775807 + 1 + 9223372036854775808)
+** 5)
+The 8 in Int 8 is the number of bits used to store the value of the integer. So the cardinality is ~2 ^ 8~
