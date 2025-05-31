@@ -1,0 +1,32 @@
+* Logic Goats
+#+BEGIN_SRC haskell :tangle logic-goats.hs :comments link
+class TooMany a where
+  tooMany :: a -> Bool
+
+instance TooMany Int where
+  tooMany n = n > 42
+
+#+END_SRC
+** 1)
+#+BEGIN_SRC haskell :tangle logic-goats.hs :comments link
+newtype Tup = Tup (Int,String) deriving (Eq, Show)
+
+instance TooMany Tup where
+  tooMany (Tup (a,b)) = a > 42
+#+END_SRC
+
+** 2)
+#+BEGIN_SRC haskell :tangle logic-goats.hs :comments link
+newtype TupInt = TupInt (Int,Int) deriving (Eq, Show)
+
+instance TooMany TupInt where
+  tooMany (TupInt (a,b)) = (a + b) > 42
+#+END_SRC
+
+** 3)
+#+BEGIN_SRC haskell :tangle logic-goats.hs :comments link
+newtype ThirdTup a = ThirdTup (a,a) deriving (Eq, Show)
+
+instance (Num a, TooMany a) => TooMany (ThirdTup a) where
+  tooMany (ThirdTup (a, b)) = tooMany (a + b)
+#+END_SRC

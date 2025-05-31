@@ -1,0 +1,60 @@
+* Vehicle Exercises
+** Setup
+#+BEGIN_SRC haskell :tangle vehicles.hs :comments link
+data Price = Price Integer deriving (Eq, Show)
+
+data Size = Size Integer deriving (Eq, Show)
+
+data Manufacturer
+  = Mini
+  | Mazda
+  | Tata
+  deriving (Eq, Show)
+
+data Airline
+  = PapuAir
+  | CatapultsR'Us
+  | TakeYourChancesUnited
+  deriving (Eq, Show)
+
+data Vehicle
+  = Car Manufacturer Price
+  | Plane Airline Size
+  deriving (Eq, Show)
+
+myCar = Car Mini (Price 14000)
+
+urCar = Car Mazda (Price 20000)
+
+clownCar = Car Tata (Price 7000)
+
+doge = Plane PapuAir
+#+END_SRC
+
+*** 1)
+myCar is of the type Vehicle
+*** 2)
+#+BEGIN_SRC haskell :tangle vehicles.hs :comments link
+isCar :: Vehicle -> Bool
+isCar (Car _ _) = True
+isCar _ = False
+
+isPlane :: Vehicle -> Bool
+isPlane (Plane _ _) = True
+isPlane _ = False
+
+areCars :: [Vehicle] -> [Bool]
+areCars = map isCar
+#+END_SRC
+
+*** 3)
+#+BEGIN_SRC haskell :tangle vehicles.hs :comments link
+getManu :: Vehicle -> Manufacturer
+getManu (Car m _) = m
+#+END_SRC
+
+*** 4)
+The function above is just a partial function so trying to use it with a Plane would cause it to error out
+
+*** 5)
+Changes reflected in the code blocks above

@@ -1,0 +1,55 @@
+* The Quad
+** 1)
+#+BEGIN_SRC haskell
+data Quad =
+  One
+  | Two
+  | Three
+  | Four
+  deriving (Eq, Show)
+
+eQuad :: Either Quad Quad
+#+END_SRC
+$$
+4 + 4 = 8
+$$
+
+** 2)
+#+BEGIN_SRC haskell
+prodQuad :: (Quad, Quad)
+#+END_SRC
+$$
+4 * 4 = 16
+$$
+
+** 3)
+#+BEGIN_SRC haskell
+funcQuad :: Quad -> Quad
+#+END_SRC
+$$
+4^4 = 256
+$$
+
+** 4)
+#+BEGIN_SRC haskell
+prodTBool :: (Bool, Bool, Bool)
+#+END_SRC
+$$
+2 * 2 * 2 = 8
+$$
+
+** 5)
+#+BEGIN_SRC haskell
+gTwo :: Bool -> Bool -> Bool
+#+END_SRC
+$$
+{2 ^ 2} ^ 2 = 4 ^ 2 = 16
+$$
+
+** 6)
+#+BEGIN_SRC haskell
+fTwo :: Bool -> Quad -> Quad
+#+END_SRC
+$$
+(2 ^ 4) ^ 4 = 16 ^ 4 = 65536
+$$
