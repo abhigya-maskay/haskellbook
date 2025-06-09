@@ -215,7 +215,8 @@ unfold f start = if isNothing result
 ** Tree 2
 #+BEGIN_SRC haskell :tangle chapter-exercises-binary-tree.hs :comments both
 treeBuild :: Integer -> BinaryTree Integer
-treeBuild n = unfold f n where
-  f 0 = Nothing
-  f n = Just (n - 1, n - 1, n - 1)
+treeBuild n = unfold f 0 where
+  f n'
+    | n' == n = Nothing
+    | otherwise = Just (n' + 1, n', n'+ 1)
 #+END_SRC
