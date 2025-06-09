@@ -1,0 +1,221 @@
+* Determine the kind
+** Word-1
+#+NAME kind-1
+#+BEGIN_SRC haskell
+id :: a -> a
+#+END_SRC
+~a~ is of kind ~*~
+
+** Word-2
+#+NAME kind-2
+#+BEGIN_SRC haskell
+r :: a -> f a
+#+END_SRC
+~a~ is of kind ~*~ and ~f~ is of kind ~* -> *~
+
+* String Processing
+** String-1
+#+NAME string-1
+#+BEGIN_SRC haskell :tangle chapter-exercises-string-processing.hs :comments both
+import Data.Maybe (fromMaybe)
+
+notThe :: String -> Maybe String
+notThe s = if s /= "the" then Just s else Nothing
+
+replaceThe :: String -> String
+replaceThe = unwords . map (fromMaybe "a" . notThe) . words
+#+END_SRC
+** String-2
+#+NAME string-2
+#+BEGIN_SRC haskell :tangle chapter-exercises-string-processing.hs :comments both
+countTheBeforeVowel :: String -> Integer
+countTheBeforeVowel = countVowels . getVowelThes . words
+  where
+    getVowelThes :: [String] -> String
+    getVowelThes [] = []
+    getVowelThes [x] = []
+    getVowelThes ("the":(y:ys):xs) = getVowelThes ((y:ys):xs) ++ [y]
+    getVowelThes (x:xs) = getVowelThes xs
+#+END_SRC
+** String-3
+#+NAME string-3
+#+BEGIN_SRC haskell :tangle chapter-exercises-string-processing.hs :comments both
+countVowels :: String -> Integer
+countVowels = fromIntegral . length . filter (`elem` "aeiou")
+#+END_SRC
+
+* Validate the word
+
+#+NAME validate
+#+BEGIN_SRC haskell :tangle chapter-exercises-validate-the-word.hs :comments both
+import Data.List (partition)
+
+newtype Word' =
+  Word' String
+  deriving (Eq, Show)
+
+mkWord :: String -> Maybe Word'
+mkWord s = isValidWord
+  where
+    characters = partition (`elem` "aeiou") s
+    vowels = fst characters
+    consonants = snd characters
+    isValidWord = if length vowels > length consonants
+      then Nothing
+      else Just . Word' $ s
+#+END_SRC
+
+* It's Only Natural
+
+#+NAME natural
+#+BEGIN_SRC haskell :tangle chapter-exercises-its-only-natural.hs :comments both
+data Nat = Zero | Succ Nat deriving (Eq, Show)
+
+natToInteger :: Nat -> Integer
+natToInteger Zero = 0
+natToInteger (Succ nat) = 1 + natToInteger nat
+
+integerToNat :: Integer -> Maybe Nat
+integerToNat 0 = Just Zero
+integerToNat n
+  | n < 0 = Nothing
+  | n > 0 = fmap Succ . integerToNat $ (n - 1)
+#+END_SRC
+
+* Small Library for Maybe
+** Maybe 1
+#+BEGIN_SRC haskell :tangle chapter-exercises-small-library-for-maybe.hs :comments both
+isJust :: Maybe a -> Bool
+isJust Nothing = False
+isJust (Just _) = True
+
+isNothing :: Maybe a -> Bool
+isNothing Nothing = True
+isNothing (Just _) = False
+#+END_SRC
+** Maybe 2
+#+BEGIN_SRC haskell :tangle chapter-exercises-small-library-for-maybe.hs :comments both
+mayybee :: b -> (a -> b) -> Maybe a -> b
+mayybee def f Nothing = def
+mayybee _ f (Just x) = f x
+#+END_SRC
+** Maybe 3
+#+BEGIN_SRC haskell :tangle chapter-exercises-small-library-for-maybe.hs :comments both
+fromMaybe :: a -> Maybe a -> a
+fromMaybe def = mayybee def id
+#+END_SRC
+** Maybe 4
+#+BEGIN_SRC haskell :tangle chapter-exercises-small-library-for-maybe.hs :comments both
+listToMaybe :: [a] -> Maybe a
+listToMaybe [] = Nothing
+listToMaybe (x:xs) = Just x
+
+maybeToList :: Maybe a -> [a]
+maybeToList Nothing = []
+maybeToList (Just x) = [x]
+#+END_SRC
+** Maybe 5
+#+BEGIN_SRC haskell :tangle chapter-exercises-small-library-for-maybe.hs :comments both
+catMaybes :: [Maybe a] -> [a]
+catMaybes = concatMap maybeToList
+#+END_SRC
+** Maybe 6
+#+BEGIN_SRC haskell :tangle chapter-exercises-small-library-for-maybe.hs :comments both
+flipMaybe :: [Maybe a] -> Maybe [a]
+flipMaybe xs
+  | any isNothing $ xs = Nothing
+  | otherwise = Just . catMaybes $ xs
+#+END_SRC
+* Small library for Either
+** Either 1
+#+BEGIN_SRC haskell :tangle chapter-exercises-small-library-for-either.hs :comments both
+lefts' :: [Either a b] -> [a]
+lefts' = foldr addLeft []
+  where
+    addLeft (Left a) acc = a:acc
+    addLeft (Right b) acc = acc
+#+END_SRC
+** Either 2
+#+BEGIN_SRC haskell :tangle chapter-exercises-small-library-for-either.hs :comments both
+rights' :: [Either a b] -> [b]
+rights' = foldr addRight []
+  where
+    addRight (Left a) acc = acc
+    addRight (Right b) acc = b:acc
+#+END_SRC
+** Either 3
+#+BEGIN_SRC haskell :tangle chapter-exercises-small-library-for-either.hs :comments both
+partitionEithers' :: [Either a b] -> ([a], [b])
+partitionEithers' xs = (lefts' xs, rights' xs)
+#+END_SRC
+** Either 4
+#+BEGIN_SRC haskell :tangle chapter-exercises-small-library-for-either.hs :comments both
+eitherMaybe' :: (b -> c) -> Either a b -> Maybe c
+eitherMaybe' f (Left a) = Nothing
+eitherMaybe' f (Right b) = Just (f b)
+#+END_SRC
+** Either 5
+#+BEGIN_SRC haskell :tangle chapter-exercises-small-library-for-either.hs :comments both
+either' :: (a -> c) -> (b -> c) -> Either a b -> c
+either' f _ (Left a) = f a
+either' _ f (Right b) = f b
+#+END_SRC
+** Either 6
+#+BEGIN_SRC haskell :tangle chapter-exercises-small-library-for-either.hs :comments both
+eitherMaybe'' :: (b -> c) -> Either a b -> Maybe c
+eitherMaybe'' f = either' (const Nothing) (Just . f)
+#+END_SRC
+* Unfolds
+** Unfold 1
+#+BEGIN_SRC haskell :tangle chapter-exercises-unfold.hs :comments both
+import Data.Maybe (isNothing, fromJust)
+
+myIterate :: (a -> a) -> a -> [a]
+myIterate f start = start : myIterate f (f start)
+#+END_SRC
+** Unfold 2
+#+BEGIN_SRC haskell :tangle chapter-exercises-unfold.hs :comments both
+myUnfoldr :: (b -> Maybe (a,b)) -> b -> [a]
+myUnfoldr f start = if isNothing result
+  then []
+  else currentVal : myUnfoldr f nextVal
+  where
+    result = f start
+    currentVal = fst . fromJust $ result
+    nextVal = snd . fromJust $ result
+#+END_SRC
+** Unfold 3
+#+BEGIN_SRC haskell :tangle chapter-exercises-unfold.hs :comments both
+betterIterate :: (a -> a) -> a -> [a]
+betterIterate f = myUnfoldr g
+  where
+    g x = Just (x, f x)
+#+END_SRC
+
+* Binary Trees
+** Tree 1
+#+BEGIN_SRC haskell :tangle chapter-exercises-binary-tree.hs :comments both
+import Data.Maybe (isNothing, fromJust)
+
+data BinaryTree a =
+  Leaf
+  | Node (BinaryTree a) a (BinaryTree a)
+  deriving (Eq, Ord, Show)
+
+unfold :: (a -> Maybe (a,b,a)) -> a -> BinaryTree b
+unfold f start = if isNothing result
+  then Leaf
+  else Node leftTree currentVal rightTree
+  where
+    result = f start
+    (leftVal,currentVal,rightVal) = fromJust result
+    leftTree = unfold f leftVal
+    rightTree = unfold f rightVal
+#+END_SRC
+** Tree 2
+#+BEGIN_SRC haskell :tangle chapter-exercises-binary-tree.hs :comments both
+treeBuild :: Integer -> BinaryTree Integer
+treeBuild n = unfold f n where
+  f 0 = Nothing
+  f n = Just (n - 1, n - 1, n - 1)
+#+END_SRC
