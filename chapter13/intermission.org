@@ -1,0 +1,13 @@
+* Intermission
+1) The ~forever~ and ~when~ functions are being imported from ~Control.Monad~
+2) The imports that are unqualified and imported in their entirety are
+   - ~Data.Bits~
+   - ~Database.BlackTip.Types~
+3) The best guess would be that the Types module holds all the custom types, type aliases and the type information for the library
+4)
+  a) The aliased import modules are
+     - ~MV~: ~Control.Concurrent.MVar~
+     - ~FPC~: ~Filesystem.Path.CurrentOS~
+     - ~CC~: ~Control.Concurrent~
+  b) ~FS.writeFile~ refers to the writeFile function in the ~Filesystem~ module
+  c) ~forever~ comes from the ~Control.Monad~ import
