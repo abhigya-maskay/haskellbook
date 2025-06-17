@@ -1,5 +1,5 @@
 import Test.QuickCheck
-import Lib
+import Lib (half, capitalizeWord)
 import Data.List (sort)
 
 prop_halfIdentity :: Property
@@ -64,10 +64,60 @@ prop_exponentCommutative = property exponentCommutative where
   exponentCommutative :: Int -> Int -> Bool
   exponentCommutative x y = x ^ y == y ^ x
 
+instance Show (a -> b) where
+  show _ = "f"
+
 prop_dollar :: Property
 prop_dollar = property dollar where
   dollar :: (Int -> Int) -> Int -> Bool
   dollar f a = (f $ a) == f a
+
+-- Not equal
+prop_foldrCons :: Property
+prop_foldrCons = property foldrCons where
+  foldrCons :: [Int] -> [Int] -> Bool
+  foldrCons xs xs' = foldr (:) xs xs' == (xs ++ xs')
+
+prop_foldrConcat :: Property
+prop_foldrConcat = property foldrConcat where
+  foldrConcat :: [[Int]] -> Bool
+  foldrConcat xs = foldr (++) [] xs == concat xs
+
+-- Not True for empty list
+prop_takeLength :: Property
+prop_takeLength = property takeLength where
+  takeLength :: Int -> [Int] -> Bool
+  takeLength n xs = length (take n xs) == n
+
+prop_roundTrip :: Property
+prop_roundTrip = property roundTrip where
+  roundTrip :: Int -> Bool
+  roundTrip x = (read . show $ x) == x
+
+-- Fails on negative numbers and due to the lack of precision
+prop_square :: Property
+prop_square = property squareIdentity where
+  square x = x * x
+  squareIdentity :: Float -> Bool
+  squareIdentity x = (square . sqrt $ x) == x
+
+-- Idempotence
+twice :: (a -> a) -> a -> a
+twice f = f . f
+
+fourTimes :: (a -> a) -> a -> a
+fourTimes = twice . twice
+
+prop_capitalizeWord :: Property
+prop_capitalizeWord = property capitalizeIdem where
+  capitalizeIdem :: String -> Bool
+  capitalizeIdem x = (capitalizeWord x == twice capitalizeWord x) &&
+    (capitalizeWord x == fourTimes capitalizeWord x)
+
+prop_sort :: Property
+prop_sort = property sortIdem where
+  sortIdem :: [Int] -> Bool
+  sortIdem xs = (sort xs == twice sort xs) && (sort xs == fourTimes sort xs)
 
 main :: IO()
 main = do
@@ -81,3 +131,11 @@ main = do
   quickCheck prop_divMod
   quickCheck prop_exponentAssociative
   quickCheck prop_exponentCommutative
+  quickCheck prop_dollar
+  quickCheck prop_foldrCons
+  quickCheck prop_foldrConcat
+  quickCheck prop_takeLength
+  quickCheck prop_roundTrip
+  quickCheck prop_square
+  quickCheck prop_capitalizeWord
+  quickCheck prop_sort
