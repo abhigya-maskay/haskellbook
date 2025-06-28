@@ -1,0 +1,18 @@
+* Be kind
+** 1)
+#+BEGIN_SRC haskell
+f :: a -> a
+#+END_SRC
+The kind of ~a~ is ~*~
+
+** 2)
+#+BEGIN_SRC haskell
+f :: a -> b a -> T (b a)
+#+END_SRC
+The kind of ~b~ and ~T~ is ~* -> *~
+
+** 3)
+#+BEGIN_SRC haskell
+f :: c a b -> c b a
+#+END_SRC
+The kind of ~c~ is ~* -> * -> *~
