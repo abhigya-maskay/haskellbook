@@ -1,0 +1,10 @@
+cradle:
+  stack:
+    - path: "./src"
+      component: "instances-of-func:lib"
+
+    - path: "./app/Main.hs"
+      component: "instances-of-func:exe:instances-of-func-exe"
+
+    - path: "./test"
+      component: "instances-of-func:test:instances-of-func-test"

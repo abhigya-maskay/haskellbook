@@ -1,0 +1,31 @@
+* Heavy Lifting
+** 1)
+#+BEGIN_SRC haskell :tangle heavy-lifting.hs :comments link
+a = fmap (+ 1) $ read "[1]" :: [Int]
+#+END_SRC
+
+** 2)
+#+BEGIN_SRC haskell :tangle heavy-lifting.hs :comments link
+b = fmap (++ "lol") <$> Just ["Hi,", "Hello"]
+#+END_SRC
+
+** 3)
+#+BEGIN_SRC haskell :tangle heavy-lifting.hs :comments link
+c = (*2) . (\x -> x - 2)
+#+END_SRC
+
+** 4)
+#+BEGIN_SRC haskell :tangle heavy-lifting.hs :comments link
+d =
+  fmap ((return '1' ++) . show)
+  (\x -> [x, 1..3])
+#+END_SRC
+** 5)
+#+BEGIN_SRC haskell :tangle heavy-lifting.hs :comments link
+e :: IO Integer
+e = let
+  ioi = readIO "1" :: IO Integer
+  changed = read . ("123"++) . show <$> ioi
+  in
+  fmap (*3) changed
+#+END_SRC
