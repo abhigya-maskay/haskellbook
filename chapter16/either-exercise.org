@@ -1,0 +1,12 @@
+* Short exercise
+** 1)
+#+BEGIN_SRC haskell :tangle either-exercises.org :comments link
+data Sum a b = First a | Second b deriving (Eq, Show)
+
+instance Functor (Sum a) where
+  fmap _ x@(First _) = x
+  fmap f (Second b) = Second (f b)
+#+END_SRC
+** 2)
+A functor that applies a function only to First is impossible because the first argument to Sum is part of the structure that
+functor is acting over.
