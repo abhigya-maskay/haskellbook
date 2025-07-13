@@ -1,0 +1,10 @@
+cradle:
+  stack:
+    - path: "./src"
+      component: "list-ziplist:lib"
+
+    - path: "./app/Main.hs"
+      component: "list-ziplist:exe:list-ziplist-exe"
+
+    - path: "./test"
+      component: "list-ziplist:test:list-ziplist-test"
