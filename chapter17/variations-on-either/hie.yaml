@@ -1,0 +1,10 @@
+cradle:
+  stack:
+    - path: "./src"
+      component: "variations-on-either:lib"
+
+    - path: "./app/Main.hs"
+      component: "variations-on-either:exe:variations-on-either-exe"
+
+    - path: "./test"
+      component: "variations-on-either:test:variations-on-either-test"

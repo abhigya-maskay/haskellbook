@@ -1,0 +1,29 @@
+* Specializing Applicative Instances
+** 1)
+#+BEGIN_SRC haskell
+[]
+
+pure :: a -> [a]
+(<*>) :: [(a -> b)] -> [a] -> [b]
+#+END_SRC
+** 2)
+#+BEGIN_SRC haskell
+IO
+
+pure :: a -> IO a
+(<*>) :: IO (a -> b) -> IO a -> IO b
+#+END_SRC
+** 3)
+#+BEGIN_SRC haskell
+(,) a
+
+pure :: b -> (a,b)
+(<*>) :: (a, b -> c) -> (a, b) -> (a, c)
+#+END_SRC
+** 4)
+#+BEGIN_SRC haskell
+(->) e
+
+pure :: a -> (e -> a)
+(<*>) :: (e -> a -> b) -> (e -> a) -> (e -> b)
+#+END_SRC
