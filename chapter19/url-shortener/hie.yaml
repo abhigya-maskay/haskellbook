@@ -1,0 +1,10 @@
+cradle:
+  stack:
+    - path: "./src"
+      component: "url-shortener:lib"
+
+    - path: "./app/Main.hs"
+      component: "url-shortener:exe:url-shortener-exe"
+
+    - path: "./test"
+      component: "url-shortener:test:url-shortener-test"
