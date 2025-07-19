@@ -1,0 +1,10 @@
+cradle:
+  stack:
+    - path: "./src"
+      component: "chapter-exercises:lib"
+
+    - path: "./app/Main.hs"
+      component: "chapter-exercises:exe:chapter-exercises-exe"
+
+    - path: "./test"
+      component: "chapter-exercises:test:chapter-exercises-test"
