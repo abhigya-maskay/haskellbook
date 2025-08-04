@@ -1,6 +1,7 @@
-module FizzBuzz where
+module FizzBuzzDList where
 
 import Control.Monad.Trans.State
+import qualified Data.DList as DL
 
 fizzBuzz :: Integer -> String
 fizzBuzz n
@@ -10,15 +11,16 @@ fizzBuzz n
   | otherwise = show n
 
 fizzBuzzList :: [Integer] -> [String]
-fizzBuzzList list = execState (mapM_ addResult list) []
+fizzBuzzList list =
+  let dlist =
+        execState (mapM_ addResult list) DL.empty
+  in DL.apply dlist []
 
-addResult :: Integer -> State [String] ()
+addResult :: Integer -> State (DL.DList String) ()
 addResult n = do
   xs <- get
   let result = fizzBuzz n
-  put (result:xs)
+  put (DL.snoc xs result)
 
 main :: IO ()
-main =
-  mapM_ putStrLn $
-    fizzBuzzList (enumFromThenTo 100 99 1)
+main = mapM_ putStrLn $ fizzBuzzList [1..100]
