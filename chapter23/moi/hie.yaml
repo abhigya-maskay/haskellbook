@@ -1,0 +1,7 @@
+cradle:
+  cabal:
+    - path: "src"
+      component: "lib:moi"
+
+    - path: "test"
+      component: "moi:test:moi-test"
