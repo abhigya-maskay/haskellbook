@@ -1,0 +1,7 @@
+cradle:
+  cabal:
+    - path: "src"
+      component: "lib:parsing-ini"
+
+    - path: "test"
+      component: "parsing-ini:test:parsing-ini-test"

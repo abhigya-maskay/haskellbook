@@ -1,0 +1,7 @@
+cradle:
+  cabal:
+    - path: "src"
+      component: "lib:parsing-practice"
+
+    - path: "test"
+      component: "parsing-practice:test:parsing-practice-test"
