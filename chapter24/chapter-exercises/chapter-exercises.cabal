@@ -59,6 +59,14 @@ library
 
     -- Modules exported by the library.
     exposed-modules:  SemVer
+                      , Integer
+                      , PhoneNumber
+                      , LogFile
+                      , Util
+                      , Ipv4
+                      , Ipv6
+                      , IpConverter
+                      , Dot
 
     -- Modules included in this library but not exported.
     -- other-modules:
@@ -73,6 +81,9 @@ library
                       , text
                       , containers
                       , raw-strings-qq
+                      , time
+                      , QuickCheck
+                      , fgl
 
     -- Directories containing source files.
     hs-source-dirs:   src
@@ -88,7 +99,12 @@ test-suite chapter-exercises-test
     default-language: Haskell2010
 
     -- Modules included in this executable, other than Main.
-    -- other-modules:
+    other-modules:    LogFileTest
+                      , TestUtil
+                      , Ipv4Test
+                      , Ipv6Test
+                      , IpConverterTest
+                      , DotTest
 
     -- LANGUAGE extensions used by modules in this package.
     -- other-extensions:
@@ -106,3 +122,10 @@ test-suite chapter-exercises-test
     build-depends:
         base ^>=4.19.2.0,
         chapter-exercises
+        , raw-strings-qq
+        , containers
+        , text
+        , time
+        , hspec
+        , attoparsec
+        , QuickCheck
